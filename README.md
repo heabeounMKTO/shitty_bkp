@@ -9,6 +9,9 @@ on debian / ubuntu <br>
 
 `sudo apt install rsync` (if it dont come with your OS install already)
 
+# building
+run `make`
+
 # usage 
 1. write the folder(s) you want to sync on `backupfile.txt` each unique separated by new line
 2. run the program and provide the destination `./shittybkp /path/to/destination_folder` (it even works networked computers! just authorize your ssh keypair ! wow)
