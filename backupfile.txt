@@ -1,0 +1,3 @@
+/home/hbdesk/hbvec/
+/home/hbdesk/hbfetch/
+/home/hbdesk/hbvec_rs/
