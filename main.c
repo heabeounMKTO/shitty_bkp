@@ -6,6 +6,9 @@
 /* long ass file paths : now covered !*/
 #define BUFFER_SIZE 2048 
 
+#ifndef BACKUP_INTERVAL 
+#define BACKUP_INTERVAL 1800
+#endif
 
 char** read_backupfile(size_t *num_lines) {
   FILE *file;
@@ -17,7 +20,6 @@ char** read_backupfile(size_t *num_lines) {
     perror("backupfile.txt not found!");
     return NULL;
   }
-
 
   while(fgets(buffer, BUFFER_SIZE, file) != NULL) {
     buffer[strcspn(buffer, "\n")] = '\0';
@@ -47,29 +49,31 @@ char** read_backupfile(size_t *num_lines) {
 }
 
 int main(int argc, char* argv[]) {
-  size_t num_lines = 0;
-  char **file_content = read_backupfile(&num_lines);
-  if (argc < 2) {
-    printf("no backup path provided!\nusage: ./shittybkp /path/to/backup_directory\n");
-    return 1;
-  }
-  printf("destination: %s\n", argv[1]);
-  if (file_content != NULL) {
-    for (size_t i = 0; i < num_lines; i++) {
-      size_t command_length = snprintf(NULL, 0, "rsync -azP %s %s", file_content[i] , argv[1]) + 1;
-      char* _command = malloc(command_length);
-      printf("comand size: %d\n", command_length); 
-      snprintf(_command, command_length, "rsync -azP %s %s", file_content[i], argv[1]);
-      printf("command: %s\n", _command);
-      int result = system(_command);
-      if (result != 0) {
-          fprintf(stderr, "Error: rsync failed with status %d\n", result);
-      } else {
-          printf("Backup completed successfully.\n");
-      }
-      free(file_content[i]);
-    }
-    free(file_content);
+  while (1) {
+        size_t num_lines = 0;
+        char **file_content = read_backupfile(&num_lines);
+        if (argc < 2) {
+          printf("no backup path provided!\nusage: ./shittybkp /path/to/backup_directory\n");
+          return 1;
+        }
+        printf("destination: %s\n", argv[1]);
+        if (file_content != NULL) {
+          for (size_t i = 0; i < num_lines; i++) {
+            size_t command_length = snprintf(NULL, 0, "rsync -azP %s %s", file_content[i] , argv[1]) + 1;
+            char* _command = malloc(command_length);
+            snprintf(_command, command_length, "rsync -azP %s %s", file_content[i], argv[1]);
+            printf("command: %s\n", _command);
+            int result = system(_command);
+            if (result != 0) {
+                fprintf(stderr, "Error: rsync failed with status %d\n", result);
+            } else {
+                printf("Backup completed successfully.\n");
+            }
+            free(file_content[i]);
+          }
+          free(file_content);
+        }
+    sleep(BACKUP_INTERVAL);
   }
   return 0;
 }
