@@ -61,7 +61,7 @@ int main(int argc, char* argv[]) {
           for (size_t i = 0; i < num_lines; i++) {
             size_t command_length = snprintf(NULL, 0, "rsync -azP %s %s", file_content[i] , argv[1]) + 1;
             char* _command = malloc(command_length);
-            snprintf(_command, command_length, "rsync -azP %s %s", file_content[i], argv[1]);
+            snprintf(_command, command_length, "rsync --delete -azP %s %s", file_content[i], argv[1]);
             printf("command: %s\n", _command);
             int result = system(_command);
             if (result != 0) {

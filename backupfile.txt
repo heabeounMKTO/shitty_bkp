@@ -1,3 +1,5 @@
-/home/hbdesk/hbvec/
-/home/hbdesk/hbfetch/
-/home/hbdesk/hbvec_rs/
+/home/hbthinkpad/transmission_staging
+/home/hbthinkpad/pirated_music
+/home/hbthinkpad/SillyTavern
+/home/hbthinkpad/Kino
+/home/hbthinkpad/jellyfin
