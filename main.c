@@ -4,7 +4,7 @@
 #include <unistd.h>
 
 /* long ass file paths : now covered !*/
-#define BUFFER_SIZE 2048 
+#define BUFFER_SIZE 300000 
 
 #ifndef BACKUP_INTERVAL 
 #define BACKUP_INTERVAL 1800
@@ -59,7 +59,7 @@ int main(int argc, char* argv[]) {
         printf("destination: %s\n", argv[1]);
         if (file_content != NULL) {
           for (size_t i = 0; i < num_lines; i++) {
-            size_t command_length = snprintf(NULL, 0, "rsync -azP %s %s", file_content[i] , argv[1]) + 1;
+            size_t command_length = snprintf(NULL, 0, "rsync -azP %s %s", file_content[i] , argv[1]) + 30000;
             char* _command = malloc(command_length);
             snprintf(_command, command_length, "rsync --delete -azP %s %s", file_content[i], argv[1]);
             printf("command: %s\n", _command);

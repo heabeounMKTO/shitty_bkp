@@ -3,3 +3,4 @@
 /home/hbthinkpad/SillyTavern
 /home/hbthinkpad/Kino
 /home/hbthinkpad/jellyfin
+/home/hbthinkpad/mc_server03/
